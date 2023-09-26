@@ -122,6 +122,9 @@ line-height: 1.3;
 opacity: 0.4;
 margin-top: 80px;
 margin-bottom: 40px;
+}
+pre:not(.r) {
+max-height: 500px;
 }</style>
 
 
@@ -137,79 +140,81 @@ margin-bottom: 40px;
 <h1 class="title toc-ignore">Relación 1.4 · Factores</h1>
 <h3 class="subtitle">Introducción a la Programación para Ciencia de Datos</h3>
 <h4 class="author">Miguel Ángel Fernández Gutiérrez</h4>
-<h4 class="date">25 septiembre, 2023</h4>
+<h4 class="date">26 septiembre, 2023</h4>
 
 
 
 <div id="ejercicio-1" class="section level2">
 <h2>Ejercicio 1</h2>
-<p>Crea un factor llamado <code>fact_puntuacion</code> que contenga puntuaciones de 1 al 5 para 100 productos. Utiliza la función summary() para obtener un resumen de la distribución de puntuaciones. ¿Qué puedes deducir del tipo de aleatoriedad usada en sample?</p>
+<p>Crea un factor llamado <code>fact_puntuacion</code> que contenga puntuaciones de 1 al 5 para 100 productos. Utiliza la función <code>summary()</code> para obtener un resumen de la distribución de puntuaciones. ¿Qué puedes deducir del tipo de aleatoriedad usada en <code>sample</code>?</p>
 <pre class="r"><code>fact_puntuacion &lt;- factor(sample(1:5, 100, replace=TRUE), 1:5, labels=c(&quot;muy mal&quot;, &quot;mal&quot;, &quot;regular&quot;, &quot;bien&quot;, &quot;muy bien&quot;))
 fact_puntuacion</code></pre>
-<pre><code>##   [1] regular  regular  bien     regular  mal      regular  muy bien muy bien
-##   [9] regular  muy bien regular  bien     regular  muy mal  bien     muy bien
-##  [17] bien     muy mal  muy bien bien     mal      regular  bien     bien    
-##  [25] regular  regular  bien     regular  bien     bien     mal      muy mal 
-##  [33] bien     bien     mal      muy bien muy mal  muy mal  muy mal  muy mal 
-##  [41] bien     muy mal  mal      muy mal  regular  mal      mal      muy bien
-##  [49] bien     muy bien regular  muy bien muy bien regular  muy mal  mal     
-##  [57] bien     bien     muy bien muy bien bien     muy mal  regular  muy mal 
-##  [65] mal      regular  muy mal  mal      regular  muy bien muy mal  muy mal 
-##  [73] regular  bien     muy mal  muy bien bien     mal      bien     bien    
-##  [81] mal      muy mal  mal      mal      muy mal  mal      mal      muy bien
-##  [89] bien     mal      bien     regular  bien     muy mal  muy bien mal     
-##  [97] muy bien mal      muy mal  bien    
+<pre><code>##   [1] muy bien regular  bien     bien     mal      muy bien regular  bien    
+##   [9] bien     muy bien muy bien regular  muy mal  muy mal  muy bien regular 
+##  [17] muy mal  bien     muy bien muy mal  bien     muy mal  muy mal  mal     
+##  [25] mal      muy mal  muy bien mal      regular  muy mal  muy bien bien    
+##  [33] mal      muy mal  regular  muy mal  muy bien regular  regular  bien    
+##  [41] mal      mal      mal      muy bien bien     muy mal  muy mal  mal     
+##  [49] regular  regular  mal      mal      muy mal  muy bien mal      bien    
+##  [57] muy mal  mal      muy bien muy mal  muy mal  bien     bien     regular 
+##  [65] regular  muy mal  regular  regular  bien     muy mal  muy mal  muy bien
+##  [73] muy bien bien     muy mal  muy mal  muy bien mal      muy bien mal     
+##  [81] bien     muy mal  bien     mal      bien     muy mal  muy bien muy mal 
+##  [89] muy bien regular  muy mal  mal      regular  bien     mal      bien    
+##  [97] bien     mal      muy bien regular 
 ## Levels: muy mal mal regular bien muy bien</code></pre>
+<p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote">Podemos ver que todos los valores son cercanos a 20, lo cual es esperable en una distribución uniforme.</span></p>
 <pre class="r"><code>summary(fact_puntuacion)</code></pre>
 <pre><code>##  muy mal      mal  regular     bien muy bien 
-##       20       19       19       25       17</code></pre>
+##       25       19       17       20       19</code></pre>
 </div>
 <div id="ejercicio-2" class="section level2">
 <h2>Ejercicio 2</h2>
-<p>Crea un factor ordenado para edades entre 0 y 100 de 100 personas. Utiliza la funcion cut para generar 3 nieveles separados. Ahora reetiqueta el factor como “joven”, “adulto” o “anciano”. Muestra la frecuencia de cada nivel.</p>
+<p>Crea un factor ordenado para edades entre 0 y 100 de 100 personas. Utiliza la función <code>cut</code> para generar 3 nieveles separados. Ahora reetiqueta el factor como <code>&quot;joven&quot;</code>, <code>&quot;adulto&quot;</code> o <code>&quot;anciano&quot;</code>. Muestra la frecuencia de cada nivel.</p>
 <pre class="r"><code>fact_edades &lt;- cut(sample(0:100, 100, replace=TRUE), breaks=3, labels=c(&quot;joven&quot;, &quot;adulto&quot;, &quot;anciano&quot;), ordered_result=TRUE)
 fact_edades</code></pre>
-<pre><code>##   [1] joven   joven   adulto  joven   adulto  anciano anciano joven   anciano
-##  [10] adulto  adulto  joven   anciano anciano joven   anciano anciano adulto 
-##  [19] anciano adulto  adulto  joven   anciano adulto  joven   adulto  joven  
-##  [28] anciano adulto  joven   joven   joven   anciano anciano joven   anciano
-##  [37] joven   adulto  anciano adulto  anciano anciano joven   joven   joven  
-##  [46] joven   anciano anciano anciano anciano anciano adulto  joven   adulto 
-##  [55] adulto  anciano joven   joven   anciano joven   adulto  anciano anciano
-##  [64] adulto  anciano adulto  joven   anciano joven   joven   anciano anciano
-##  [73] adulto  anciano anciano adulto  joven   adulto  adulto  joven   joven  
-##  [82] anciano joven   anciano joven   anciano anciano adulto  joven   joven  
-##  [91] joven   anciano joven   adulto  joven   adulto  adulto  anciano adulto 
-## [100] anciano
+<pre><code>##   [1] anciano anciano joven   anciano adulto  adulto  joven   anciano anciano
+##  [10] anciano joven   joven   adulto  joven   anciano anciano joven   adulto 
+##  [19] joven   anciano joven   joven   adulto  anciano joven   anciano anciano
+##  [28] adulto  anciano joven   joven   joven   anciano joven   joven   joven  
+##  [37] anciano adulto  anciano adulto  adulto  adulto  anciano joven   joven  
+##  [46] adulto  anciano anciano anciano joven   anciano anciano adulto  anciano
+##  [55] adulto  joven   anciano adulto  anciano joven   anciano anciano adulto 
+##  [64] joven   adulto  joven   joven   joven   joven   adulto  adulto  joven  
+##  [73] joven   adulto  joven   adulto  joven   adulto  adulto  anciano anciano
+##  [82] anciano joven   joven   anciano joven   joven   adulto  adulto  adulto 
+##  [91] joven   joven   joven   joven   adulto  adulto  anciano anciano adulto 
+## [100] adulto 
 ## Levels: joven &lt; adulto &lt; anciano</code></pre>
 <pre class="r"><code>summary(fact_edades)</code></pre>
 <pre><code>##   joven  adulto anciano 
-##      35      27      38</code></pre>
+##      38      29      33</code></pre>
 </div>
 <div id="ejercicio-3" class="section level2">
 <h2>Ejercicio 3</h2>
-<p>Crea un factor para el siguiente vector teniendo en cuenta que los niveles posibles son todas las letras de la “A” a la “Z”:</p>
+<p>Crea un factor para el siguiente vector teniendo en cuenta que los niveles posibles son todas las letras de la <code>&quot;A&quot;</code> a la <code>&quot;Z&quot;</code>:</p>
 <pre class="r"><code>v &lt;- c(&quot;A&quot;,&quot;I&quot;, &quot;I&quot;, &quot;J&quot;, &quot;A&quot;, &quot;Z&quot;, &quot;X&quot;)</code></pre>
 <pre class="r"><code>v.f &lt;- factor(v, LETTERS)
 v.f</code></pre>
 <pre><code>## [1] A I I J A Z X
 ## Levels: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</code></pre>
 <ol style="list-style-type: decimal">
-<li>Modifica una de las “I” por una “F”</li>
+<li>Modifica una de las <code>&quot;I&quot;</code> por una <code>&quot;F&quot;</code>.</li>
 </ol>
+<p><label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle"><span class="marginnote">Modificamos la primera <code>I</code>.</span></p>
 <pre class="r"><code>v.f[v.f == &quot;I&quot;][1] &lt;- &quot;F&quot;
 v.f</code></pre>
 <pre><code>## [1] A F I J A Z X
 ## Levels: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>Agrega una nueva “A” en última posición</li>
+<li>Agrega una nueva <code>&quot;A&quot;</code> en última posición.</li>
 </ol>
 <pre class="r"><code>v.f[length(v.f)+1] &lt;- &quot;A&quot;
 v.f</code></pre>
 <pre><code>## [1] A F I J A Z X A
 ## Levels: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li>Indica las letras que aparecen en el factor ordenadas por su frecuencia, empezando con la menos frecuente</li>
+<li>Indica las letras que aparecen en el factor ordenadas por su frecuencia, empezando por la menos frecuente.</li>
 </ol>
 <pre class="r"><code>sort(summary(v.f))</code></pre>
 <pre><code>## B C D E G H K L M N O P Q R S T U V W Y F I J X Z A 

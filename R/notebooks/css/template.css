@@ -58,3 +58,7 @@ hr {
   margin-top: 80px;
   margin-bottom: 40px;
 }
+
+pre:not(.r) {
+  max-height: 500px;
+}

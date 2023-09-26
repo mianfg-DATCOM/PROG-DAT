@@ -2,7 +2,7 @@
 title: "Relación 1.3 · Matrices y arrays"
 subtitle: "Introducción a la Programación para Ciencia de Datos"
 author: "Miguel Ángel Fernández Gutiérrez"
-date: "25 septiembre, 2023"
+date: "26 septiembre, 2023"
 output:
   tufte::tufte_html:
     tufte_features: []

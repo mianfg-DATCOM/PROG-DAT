@@ -124,7 +124,23 @@ margin-top: 80px;
 margin-bottom: 40px;
 }
 pre:not(.r) {
-max-height: 500px;
+max-height: 60vh;
+}
+table {
+width: fit-content!important;
+max-width: 90%;
+overflow-x: auto;
+max-height: 80vh;
+overflow-y: auto;
+font-size: 1rem;
+border-spacing: 0;
+display: block;
+}
+td {
+padding: 4px;
+}
+th {
+padding: 4px;
 }</style>
 
 
@@ -140,7 +156,7 @@ max-height: 500px;
 <h1 class="title toc-ignore">Relación 1.3 · Matrices y arrays</h1>
 <h3 class="subtitle">Introducción a la Programación para Ciencia de Datos</h3>
 <h4 class="author">Miguel Ángel Fernández Gutiérrez</h4>
-<h4 class="date">26 septiembre, 2023</h4>
+<h4 class="date">27 septiembre, 2023</h4>
 
 
 
@@ -240,15 +256,66 @@ sudoku.fill &lt;- expand.grid(1:9,1:9)[sample(9*9, floor(sudoku.fill.perc*9*9)),
 names(sudoku.fill) &lt;- c(&quot;i&quot;, &quot;j&quot;)
 sudoku.fill$value &lt;- sample(1:9, length(sudoku.fill$i), replace=TRUE)
 sudoku.fill</code></pre>
-<pre><code>##    i j value
-## 9  9 1     7
-## 48 3 6     3
-## 35 8 4     5
-## 45 9 5     9
-## 52 7 6     2
-## 18 9 2     6
-## 76 4 9     2
-## 66 3 8     9</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">i</th>
+<th align="right">j</th>
+<th align="right">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">74</td>
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">55</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">67</td>
+<td align="right">4</td>
+<td align="right">8</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">54</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">17</td>
+<td align="right">8</td>
+<td align="right">2</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">66</td>
+<td align="right">3</td>
+<td align="right">8</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">52</td>
+<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
 <p><label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle"><span class="marginnote">Rellenamos <code>sudoku</code> de acuerdo a la información que aparece en <code>sudoku.fill</code>.</span></p>
 <pre class="r"><code>for (row in 1:nrow(sudoku.fill)) {
   sudoku[sudoku.fill[row,]$i, sudoku.fill[row,]$j] &lt;- sudoku.fill[row,]$value
@@ -256,39 +323,56 @@ sudoku.fill</code></pre>
 
 sudoku</code></pre>
 <pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
-##  [1,]   NA   NA   NA   NA   NA   NA   NA   NA   NA
-##  [2,]   NA   NA   NA   NA   NA   NA   NA   NA   NA
-##  [3,]   NA   NA   NA   NA   NA    3   NA    9   NA
-##  [4,]   NA   NA   NA   NA   NA   NA   NA   NA    2
+##  [1,]    2   NA   NA   NA   NA   NA    2   NA   NA
+##  [2,]   NA   NA   NA   NA   NA   NA   NA   NA    7
+##  [3,]   NA   NA   NA   NA   NA   NA   NA    5   NA
+##  [4,]   NA   NA   NA   NA   NA   NA   NA    3   NA
 ##  [5,]   NA   NA   NA   NA   NA   NA   NA   NA   NA
 ##  [6,]   NA   NA   NA   NA   NA   NA   NA   NA   NA
-##  [7,]   NA   NA   NA   NA   NA    2   NA   NA   NA
-##  [8,]   NA   NA   NA    5   NA   NA   NA   NA   NA
-##  [9,]    7    6   NA   NA    9   NA   NA   NA   NA</code></pre>
+##  [7,]   NA   NA   NA   NA   NA    3   NA   NA   NA
+##  [8,]   NA    7   NA   NA   NA   NA   NA   NA   NA
+##  [9,]   NA   NA   NA   NA   NA    8   NA   NA   NA</code></pre>
+<hr />
+<p>Esta fue la primera solución que se me ocurrió. Una forma mucho más “al estilo de R” sería la siguiente:</p>
+<pre class="r"><code>sudoku &lt;- matrix(nrow=9, ncol=9)
+sudoku.fill.perc &lt;- 0.1
+sudoku.fill.n &lt;- 9*9*sudoku.fill.perc
+sudoku[sample(9*9, sudoku.fill.n)] &lt;- sample(9, sudoku.fill.n, replace=TRUE)
+sudoku</code></pre>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
+##  [1,]   NA   NA    9   NA    5   NA   NA    5   NA
+##  [2,]   NA   NA   NA   NA   NA    7   NA   NA   NA
+##  [3,]   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [4,]    2   NA   NA   NA   NA   NA   NA   NA   NA
+##  [5,]   NA   NA   NA    5   NA   NA   NA   NA   NA
+##  [6,]   NA   NA   NA   NA   NA   NA    2   NA   NA
+##  [7,]    7   NA   NA   NA   NA   NA   NA   NA   NA
+##  [8,]   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [9,]   NA   NA   NA   NA   NA   NA   NA   NA   NA</code></pre>
 </div>
 <div id="ejercicio-3" class="section level2">
 <h2>Ejercicio 3</h2>
 <p>Teniendo estas dos matrices:</p>
 <pre class="r"><code>matriz &lt;- matrix(sample(1:9, 30,replace=TRUE), nrow=5)
-mascara &lt;- matrix(sample(c(TRUE,FALSE), 30, replace=TRUE), nrow=5)</code></pre>
+mascara &lt;- matrix(sample(c(TRUE, FALSE), 30, replace=TRUE), nrow=5)</code></pre>
 <p>Aplique la máscara a la matriz, en donde si la posición en la máscara es <code>FALSE</code> entonces el resultado es <code>0</code> y si no se mantiene su valor.</p>
 <pre class="r"><code>matriz.modificada &lt;- matriz
 matriz.modificada[!mascara] &lt;- 0
 matriz.modificada</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
-## [1,]    0    2    0    0    9    0
-## [2,]    7    0    1    9    1    0
-## [3,]    8    5    0    9    8    0
-## [4,]    7    0    0    7    0    9
-## [5,]    4    0    0    0    0    4</code></pre>
+## [1,]    7    3    5    8    7    0
+## [2,]    2    0    2    0    2    6
+## [3,]    3    0    0    1    0    0
+## [4,]    4    5    0    0    0    0
+## [5,]    2    4    9    2    3    0</code></pre>
 <p>Calcule el producto de la matriz original por la matriz modificada traspuesta.</p>
 <pre class="r"><code>matriz %*% t(matriz.modificada)</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
-## [1,]   85   27   99   41   16
-## [2,]   23  132  180  139   40
-## [3,]   82  146  234  128   36
-## [4,]   46  119  176  179   64
-## [5,]   70   78  156   92   32</code></pre>
+## [1,]  196   86   29   43  108
+## [2,]   91   48   10   43   64
+## [3,]  113   68   10   17   81
+## [4,]  107   70   13   41  102
+## [5,]  108   52    8   28  114</code></pre>
 </div>
 <div id="ejemplo-4" class="section level2">
 <h2>Ejemplo 4</h2>

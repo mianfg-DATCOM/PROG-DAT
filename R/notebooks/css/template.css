@@ -60,5 +60,32 @@ hr {
 }
 
 pre:not(.r) {
-  max-height: 500px;
+  max-height: 60vh;
+}
+
+/*table {
+  width: fit-content!important;
+  max-width: 90%;
+  overflow-x: auto;
+  max-height: 80vh;
+  overflow-y: auto;
+  font-size: 1rem;
+  border-spacing: 0;
+  display: block;
+}
+
+td {
+  padding: 4px;
+}
+
+th {
+  padding: 4px;
+}*/
+
+table.dataTable {
+  border-top: none!important;
+}
+
+div.datatables {
+  width: 90%!important;
 }

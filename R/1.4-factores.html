@@ -124,7 +124,14 @@ margin-top: 80px;
 margin-bottom: 40px;
 }
 pre:not(.r) {
-max-height: 500px;
+max-height: 60vh;
+}
+
+table.dataTable {
+border-top: none!important;
+}
+div.datatables {
+width: 90%!important;
 }</style>
 
 
@@ -140,7 +147,7 @@ max-height: 500px;
 <h1 class="title toc-ignore">Relación 1.4 · Factores</h1>
 <h3 class="subtitle">Introducción a la Programación para Ciencia de Datos</h3>
 <h4 class="author">Miguel Ángel Fernández Gutiérrez</h4>
-<h4 class="date">26 septiembre, 2023</h4>
+<h4 class="date">27 septiembre, 2023</h4>
 
 
 
@@ -149,51 +156,51 @@ max-height: 500px;
 <p>Crea un factor llamado <code>fact_puntuacion</code> que contenga puntuaciones de 1 al 5 para 100 productos. Utiliza la función <code>summary()</code> para obtener un resumen de la distribución de puntuaciones. ¿Qué puedes deducir del tipo de aleatoriedad usada en <code>sample</code>?</p>
 <pre class="r"><code>fact_puntuacion &lt;- factor(sample(1:5, 100, replace=TRUE), 1:5, labels=c(&quot;muy mal&quot;, &quot;mal&quot;, &quot;regular&quot;, &quot;bien&quot;, &quot;muy bien&quot;))
 fact_puntuacion</code></pre>
-<pre><code>##   [1] muy bien regular  bien     bien     mal      muy bien regular  bien    
-##   [9] bien     muy bien muy bien regular  muy mal  muy mal  muy bien regular 
-##  [17] muy mal  bien     muy bien muy mal  bien     muy mal  muy mal  mal     
-##  [25] mal      muy mal  muy bien mal      regular  muy mal  muy bien bien    
-##  [33] mal      muy mal  regular  muy mal  muy bien regular  regular  bien    
-##  [41] mal      mal      mal      muy bien bien     muy mal  muy mal  mal     
-##  [49] regular  regular  mal      mal      muy mal  muy bien mal      bien    
-##  [57] muy mal  mal      muy bien muy mal  muy mal  bien     bien     regular 
-##  [65] regular  muy mal  regular  regular  bien     muy mal  muy mal  muy bien
-##  [73] muy bien bien     muy mal  muy mal  muy bien mal      muy bien mal     
-##  [81] bien     muy mal  bien     mal      bien     muy mal  muy bien muy mal 
-##  [89] muy bien regular  muy mal  mal      regular  bien     mal      bien    
-##  [97] bien     mal      muy bien regular 
+<pre><code>##   [1] muy bien mal      muy mal  muy bien muy bien muy mal  muy mal  bien    
+##   [9] muy mal  muy bien muy bien regular  regular  bien     muy mal  regular 
+##  [17] muy mal  regular  muy bien regular  mal      regular  mal      mal     
+##  [25] muy mal  bien     regular  muy mal  muy mal  mal      muy bien bien    
+##  [33] bien     bien     bien     muy mal  bien     muy bien mal      muy bien
+##  [41] regular  mal      bien     muy mal  bien     mal      bien     muy mal 
+##  [49] bien     mal      muy bien mal      muy bien regular  mal      regular 
+##  [57] mal      mal      regular  regular  muy bien muy bien mal      muy mal 
+##  [65] mal      muy bien muy mal  muy mal  regular  muy bien muy mal  regular 
+##  [73] muy mal  mal      muy bien muy mal  muy bien mal      mal      muy bien
+##  [81] regular  regular  muy bien muy mal  muy mal  muy mal  regular  mal     
+##  [89] muy bien muy bien muy mal  muy mal  bien     mal      mal      muy bien
+##  [97] mal      regular  bien     bien    
 ## Levels: muy mal mal regular bien muy bien</code></pre>
 <p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote">Podemos ver que todos los valores son cercanos a 20, lo cual es esperable en una distribución uniforme.</span></p>
 <pre class="r"><code>summary(fact_puntuacion)</code></pre>
 <pre><code>##  muy mal      mal  regular     bien muy bien 
-##       25       19       17       20       19</code></pre>
+##       23       22       18       15       22</code></pre>
 </div>
 <div id="ejercicio-2" class="section level2">
 <h2>Ejercicio 2</h2>
 <p>Crea un factor ordenado para edades entre 0 y 100 de 100 personas. Utiliza la función <code>cut</code> para generar 3 nieveles separados. Ahora reetiqueta el factor como <code>&quot;joven&quot;</code>, <code>&quot;adulto&quot;</code> o <code>&quot;anciano&quot;</code>. Muestra la frecuencia de cada nivel.</p>
 <pre class="r"><code>fact_edades &lt;- cut(sample(0:100, 100, replace=TRUE), breaks=3, labels=c(&quot;joven&quot;, &quot;adulto&quot;, &quot;anciano&quot;), ordered_result=TRUE)
 fact_edades</code></pre>
-<pre><code>##   [1] anciano anciano joven   anciano adulto  adulto  joven   anciano anciano
-##  [10] anciano joven   joven   adulto  joven   anciano anciano joven   adulto 
-##  [19] joven   anciano joven   joven   adulto  anciano joven   anciano anciano
-##  [28] adulto  anciano joven   joven   joven   anciano joven   joven   joven  
-##  [37] anciano adulto  anciano adulto  adulto  adulto  anciano joven   joven  
-##  [46] adulto  anciano anciano anciano joven   anciano anciano adulto  anciano
-##  [55] adulto  joven   anciano adulto  anciano joven   anciano anciano adulto 
-##  [64] joven   adulto  joven   joven   joven   joven   adulto  adulto  joven  
-##  [73] joven   adulto  joven   adulto  joven   adulto  adulto  anciano anciano
-##  [82] anciano joven   joven   anciano joven   joven   adulto  adulto  adulto 
-##  [91] joven   joven   joven   joven   adulto  adulto  anciano anciano adulto 
-## [100] adulto 
+<pre><code>##   [1] adulto  anciano anciano anciano joven   adulto  anciano anciano joven  
+##  [10] anciano adulto  anciano joven   adulto  anciano anciano adulto  joven  
+##  [19] anciano adulto  joven   adulto  anciano joven   adulto  joven   adulto 
+##  [28] anciano adulto  anciano anciano anciano joven   joven   adulto  adulto 
+##  [37] anciano anciano adulto  anciano joven   anciano anciano joven   anciano
+##  [46] adulto  adulto  joven   joven   anciano adulto  joven   joven   adulto 
+##  [55] joven   joven   joven   anciano joven   adulto  adulto  joven   anciano
+##  [64] anciano anciano joven   anciano joven   adulto  anciano anciano adulto 
+##  [73] adulto  adulto  adulto  adulto  adulto  anciano anciano joven   anciano
+##  [82] anciano anciano adulto  adulto  adulto  joven   joven   joven   anciano
+##  [91] anciano anciano joven   joven   joven   joven   joven   adulto  adulto 
+## [100] joven  
 ## Levels: joven &lt; adulto &lt; anciano</code></pre>
 <pre class="r"><code>summary(fact_edades)</code></pre>
 <pre><code>##   joven  adulto anciano 
-##      38      29      33</code></pre>
+##      32      31      37</code></pre>
 </div>
 <div id="ejercicio-3" class="section level2">
 <h2>Ejercicio 3</h2>
 <p>Crea un factor para el siguiente vector teniendo en cuenta que los niveles posibles son todas las letras de la <code>&quot;A&quot;</code> a la <code>&quot;Z&quot;</code>:</p>
-<pre class="r"><code>v &lt;- c(&quot;A&quot;,&quot;I&quot;, &quot;I&quot;, &quot;J&quot;, &quot;A&quot;, &quot;Z&quot;, &quot;X&quot;)</code></pre>
+<pre class="r"><code>v &lt;- c(&quot;A&quot;, &quot;I&quot;, &quot;I&quot;, &quot;J&quot;, &quot;A&quot;, &quot;Z&quot;, &quot;X&quot;)</code></pre>
 <pre class="r"><code>v.f &lt;- factor(v, LETTERS)
 v.f</code></pre>
 <pre><code>## [1] A I I J A Z X

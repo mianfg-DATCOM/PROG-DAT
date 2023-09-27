@@ -2,7 +2,7 @@
 title: "Relación 1.5 · Dataframes"
 subtitle: "Introducción a la Programación para Ciencia de Datos"
 author: "Miguel Ángel Fernández Gutiérrez"
-date: "<pending>"
+date: "27 septiembre, 2023"
 output:
   tufte::tufte_html:
     tufte_features: []
@@ -14,6 +14,40 @@ library(tufte)
 # invalidate cache when the tufte version changes
 knitr::opts_chunk$set(cache.extra = packageVersion('tufte'))
 options(htmltools.dir.version = FALSE)
+
+library(DT)
+show_table <- function(contents) {
+  datatable(
+    contents,
+    options=list(
+      searching=FALSE,
+      lengthChange=FALSE,
+      scrollX=TRUE,
+      language=list(
+        sProcessing = "Cargando...",
+        sSearch = "Buscar:", 
+        sLengthMenu = "Mostrar _MENU_ filas", 
+        sInfo = "Mostrando _START_ a _END_ de _TOTAL_ filas", 
+        sInfoEmpty = "Sin entradas", 
+        sInfoFiltered = "(filtrado de _MAX_ filas)", 
+        sInfoPostFix = "",
+        sLoadingRecords = "Cargando filas...", 
+        sZeroRecords = "No se han encontrado filas", 
+        sEmptyTable = "Sin datos disponibles", 
+        oPaginate = list(
+          sFirst = "Primero",
+          sPrevious = "Anterior", 
+          sNext = "Siguiente",
+          sLast = "Último"
+        ), 
+        oAria = list(
+          sSortAscending = ": activar para ordenar la columna en ascendente", 
+          sSortDescending = ": activar para ordenar la columna en descendente"
+        )
+      )
+    )
+  )
+}
 ```
 
 ## Ejercicio 1
@@ -22,8 +56,11 @@ Usando el dataset `mtcars`:
 
 1. Muestra las 5 primeras filas del dataset `mtcars`.
 
-```{r}
+```{r results='hide'}
 mtcars[1:5,]
+```
+```{r echo=FALSE}
+show_table(mtcars[1:5,])
 ```
 
 2. Presenta un resumen de las columnas que componen el dataset.
@@ -34,33 +71,45 @@ summary(mtcars)
 
 3. Haz una copia del dataset y convierte la variables `cyl`, `gear` y `carb` en factores.
 
-```{r}
+```{r results='hide'}
 mtcars.copy <- mtcars
 mtcars.copy$cyl <- as.factor(mtcars.copy$cyl)
 mtcars.copy$gear <- as.factor(mtcars.copy$gear)
 mtcars.copy$carb <- as.factor(mtcars.copy$carb)
 mtcars.copy
 ```
+```{r echo=FALSE}
+show_table(mtcars.copy)
+```
 
 3. Convierte las variables `vs` y `am` en lógicas.
 
-```{r}
+```{r results='hide'}
 mtcars.copy$vs <- as.logical(mtcars.copy$vs)
 mtcars.copy$am <- as.logical(mtcars.copy$am)
 mtcars.copy
 ```
+```{r echo=FALSE}
+show_table(mtcars.copy)
+```
 
 4. Muestra solo los coches con una potencia (`hp`) mayor a 100.
 
-```{r}
+```{r results='hide'}
 mtcars.copy[mtcars.copy$hp > 100,]
+```
+```{r echo=FALSE}
+show_table(mtcars.copy[mtcars.copy$hp > 100,])
 ```
 
 5. Crea un nuevo data frame llamado `coches_seleccionados` que incluya solo las columnas `mpg`, `cyl`, `hp` y `qsec` del dataset.
 
-```{r}
+```{r results='hide'}
 coches_seleccionados <- mtcars.copy[,c("mpg", "cyl", "hp", "qsec")]
 coches_seleccionados
+```
+```{r echo=FALSE}
+show_table(coches_seleccionados)
 ```
 
 6. Calcula el resumen estadístico (media, mediana, desviación estándar, etc.) de la columna `mpg` (millas por galón) para todos los coches en el dataset.
@@ -103,22 +152,31 @@ library(MASS)
 
 1. Agrega una columna al dataset de `mtcars` que contenga la marca y modelo de cada coche.
 
-```{r}
+```{r results='hide'}
 mtcars.2 <- mtcars
 mtcars.2$Manufacturer <- vapply(strsplit(rownames(mtcars.2)," "), `[`, 1, FUN.VALUE=character(1))
 mtcars.2$Model <- vapply(strsplit(rownames(mtcars.2)," "), `[`, 2, FUN.VALUE=character(1))
 mtcars.2
 ```
+```{r echo=FALSE}
+show_table(mtcars.2)
+```
 
 2. Combina los dos dataset por modelo y marca del coche solo para aquellos modelos presentes en ambos datasets. ¿Coinciden los demás valores?
 
-```{r}
+```{r results='hide'}
 merge(mtcars.2, Cars93, by=c("Manufacturer", "Model"), all.x=TRUE)
+```
+```{r echo=FALSE}
+show_table(merge(mtcars.2, Cars93, by=c("Manufacturer", "Model"), all.x=TRUE))
 ```
 
 `r margin_note("Vemos que solo hay 4 columnas en las que coincidan todos los valores.")`
-```{r}
+```{r results='hide'}
 merge(mtcars.2, Cars93, by=c("Manufacturer", "Model"))
+```
+```{r echo=FALSE}
+show_table(merge(mtcars.2, Cars93, by=c("Manufacturer", "Model")))
 ```
 
 ## Ejercicio 3
@@ -138,17 +196,23 @@ curso_b <- data.frame(
 
 1. Combina los dos dataframes en uno solo llamado `todos_los_estudiantes`
 
-```{r}
+```{r results='hide'}
 todos_los_estudiantes <- merge(curso_a, curso_b, all=TRUE)
 todos_los_estudiantes
+```
+```{r echo=FALSE}
+show_table(todos_los_estudiantes)
 ```
 
 2. Agrega una nueva columna llamada `Curso` al dataframe `todos_los_estudiantes` que indique a qué curso pertenece cada estudiante (`"A"` o `"B"`).
 
-`r margin_note("Hacemos un comportamiento similar al \U0060 X if COND else Y\U0060.")`
-```{r}
+`r margin_note("Hacemos un comportamiento similar al \U0060 X if COND else Y\U0060 de Python.")`
+```{r results='hide'}
 todos_los_estudiantes$Curso <- ifelse(todos_los_estudiantes$Nombre %in% curso_a$Nombre, "A", "B")
 todos_los_estudiantes
+```
+```{r echo=FALSE}
+show_table(todos_los_estudiantes)
 ```
 
 <div class="footer"><svg xmlns="http://www.w3.org/2000/svg" id="svg" width="50" height="50" version="1.1" viewBox="0 0 50 50"><g id="svgg" transform="matrix(.05 0 0 .05 3.2444e-8 18.441)"><path d="m673.62-327.82c-51.303 20.849-111.41 86.95-152.2 167.37-16.576 32.691-17.95 33.427-23.529 12.665-10.588-39.42-32.657-81.734-54.127-103.79-49.779-51.124-137.88 1.6679-194.87 116.75-7.2756 14.701-13.487 27.153-13.803 27.682-1.6564 2.7549-2.9562-3.7902-6.1483-30.943-16.748-142.45-91.316-147.95-183.6-13.539-49.175 71.623-55.622 92.345-32.404 104.22 12.624 6.4589 37.534-4.2791 37.534-16.179 0-7.6954 68.85-94.858 85.65-108.44 18.497-14.948 19.072-14.931 23.443 0.64991 8.5006 30.299 7.011 100.05-3.6062 169.1-2.5306 16.449-5.4754 36.119-6.5394 43.711-3.0483 21.683-8.817 57.888-12.837 80.52-2.0188 11.388-4.5379 25.881-5.5904 32.208-2.6054 15.632-10.795 58.573-20.619 108.13-4.6184 23.299-11.002 56.985-19.612 103.53-10.197 55.11-15.943 83.407-22.172 109.28-3.8132 15.816-8.5294 35.486-10.485 43.711-9.8695 41.525-5.182 59.573 18.652 71.795 18.658 9.5646 41.117 2.3754 53.408-17.088 13.131-20.809 37.637-104.39 37.637-128.39 0-6.7004 2.0188-12.762 17.611-52.85 5.5214-14.2 10.744-27.797 14.586-37.959 0.95474-2.5306 3.008-7.7069 4.5551-11.503 6.2288-15.253 30.77-91.931 40.502-126.53 5.6939-20.245 11.227-39.397 12.302-42.561 1.0698-3.1633 3.7614-12.481 5.9757-20.705 6.5049-24.145 25.111-84.609 39.282-127.68 8.817-26.802 15.575-46.098 41.059-117.33 13.918-38.885 41.83-86.272 50.82-86.272 6.3438 0 16.84 26.894 22.902 58.665 13.286 69.65 14.678 174.57 4.6472 349.69-7.9485 138.78-8.4604 156.35-6.4819 222.01 2.2891 76.028 3.3071 79.876 24.553 93.001 26.974 16.668 67.136 0.21856 71.347-29.217 1.5701-10.962 6.0045-81.515 8.3511-132.8 2.8757-62.8 10.134-133 20.814-201.3 1.1848-7.5919 4.2388-27.262 6.7809-43.711 2.5421-16.449 5.5904-34.048 6.7694-39.11 8.9952-38.5 12.515-52.66 16.593-66.717 4.9865-17.197 5.5156-18.698 20.308-57.514 14.045-36.844 54.667-117.42 74.032-146.82 4.8485-7.3676 8.84-14.097 8.8687-14.954 0.023-0.86271 4.6759-7.0915 10.33-13.844 10.151-12.13 10.312-12.21 12.435-6.6314 8.7709 23.075 13.441 141.15 9.6682 244.37-3.7154 101.6-9.1966 223.79-10.629 236.96-6.9938 64.405 0.81095 195.66 14.01 235.6 22.977 69.512 106.2 84.155 168.13 29.574 4.8427-4.2733 11.457-9.7832 14.689-12.239 33.036-25.122 87.865-105.6 104.52-153.4 16.978-48.732-45.166-86.709-79.462-48.559-6.3208 7.034-12.17 14.913-46.679 62.903-37.695 52.419-50.141 67.16-53.707 63.599-0.87997-0.87997-1.3688-112.09-1.087-247.13 0.4141-198.91-0.14379-254.75-2.9332-294.1-6.9132-97.458-18.083-149.05-43.475-200.85-5.7227-11.675-27.814-34.664-33.416-34.773-2.0763-0.0403-5.7802-1.5932-8.2361-3.4509-6.7464-5.1015-40.847-4.3423-54.506 1.2078" fill-rule="evenodd"/></g></svg></div>
